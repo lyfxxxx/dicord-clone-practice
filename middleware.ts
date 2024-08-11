@@ -1,10 +1,10 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
 
-// 此处配置需要鉴权的路由
-const isProtectedRoute = createRouteMatcher(['/']);
+// 此处配置公共路由（不需要鉴权的路由）
+const isPublicRoute = createRouteMatcher(['/api/uploadthing']);
 
 export default clerkMiddleware((auth, req) => {
-  if (isProtectedRoute(req)) {
+  if (!isPublicRoute(req)) {
     auth().protect();
   }
 });
